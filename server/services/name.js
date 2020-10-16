@@ -21,10 +21,13 @@ module.exports = class NameService {
 
         do {
             let nextName = this.getRandomStarName();
-    
-            if (!list.includes(nextName)) {
-                list.push(nextName);
+            let i = 1
+            while(list.includes(nextName)) {
+              nextName = nextName.slice(0, -1) + i.toString()
+              i++
             }
+            list.push(nextName)
+    
         } while (list.length < count);
 
         return list;

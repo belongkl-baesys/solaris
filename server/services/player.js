@@ -129,7 +129,7 @@ module.exports = class PlayerService extends EventEmitter {
         // iterate over each player and give them 1 star at a time, this is arguably the fairest way
         // otherwise we'll end up with the last player potentially having a really bad position as their
         // stars could be miles away from their home star.
-        let starsToDistribute = game.settings.player.startingStars - 1;
+        let starsToDistribute = (starLocations.length/players.length) - players.length
 
         while (starsToDistribute--) {
             for (let playerIndex = 0; playerIndex < players.length; playerIndex++) {
@@ -142,6 +142,7 @@ module.exports = class PlayerService extends EventEmitter {
 
                 // Set up the closest star.
                 this.setupStarForGameStart(game, s, player);
+                console.log(starsToDistribute)
             }
         }
 

@@ -18,9 +18,6 @@ module.exports = class GameCreateService {
             // Prevent players from being able to create loads of games?
             let openGames = await this.gameListService.listOpenGamesCreatedByUser(settings.general.createdByUserId);
 
-            if (openGames.length) {
-                throw new ValidationError('Cannot create game, you already have another game waiting for players.');
-            }
         }
         
         if (settings.general.name.trim().length < 3 || settings.general.name.trim().length > 24) {
@@ -38,6 +35,7 @@ module.exports = class GameCreateService {
 
         // Calculate how many stars we need.
         let desiredStarCount = game.settings.galaxy.starsPerPlayer * game.settings.general.playerLimit;
+        desiredStarCount *= 4
         let desiredPlayerStarCount = game.settings.player.startingStars * game.settings.general.playerLimit;
 
         if (desiredPlayerStarCount > desiredStarCount) {

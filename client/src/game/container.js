@@ -7,6 +7,8 @@ class GameContainer {
     PIXI.settings.SORTABLE_CHILDREN = true
   }
 
+  calcFPS()
+
   setupApp () {
     // Cleanup if the app already exists.
     if (this.app) {
@@ -26,6 +28,10 @@ class GameContainer {
       resolution: window.devicePixelRatio || 1,
       autoResize: true
     })
+
+    if (process.env.NODE_ENV == 'development') {
+      this.app.ticker.add( this.calcFPS.bind(this) )
+    }
 
     // create viewport
     this.viewport = new Viewport({

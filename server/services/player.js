@@ -142,7 +142,6 @@ module.exports = class PlayerService extends EventEmitter {
 
                 // Set up the closest star.
                 this.setupStarForGameStart(game, s, player);
-                console.log(starsToDistribute)
             }
         }
 

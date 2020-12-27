@@ -358,7 +358,7 @@ module.exports = class WaypointService {
         }
     }
 
-    sanitiseDarkModeCarrierWaypoints(game, carrier) {
+    sanitiseCarrierWaypointsByScanningRange(game, carrier) {
         // If in dark mode then we need to verify that waypoints are still valid.
         // For example, if a star is captured then it may no longer be in scanning range
         // so any waypoints to it should be removed unless already in transit.
@@ -389,6 +389,39 @@ module.exports = class WaypointService {
                 break;
             }
         }
+    }
+
+    sanitiseCarrierWaypointsByHyperspaceRange(game, carrier) {
+        let player = this.playerService.getById(game, carrier.ownedByPlayerId);
+        let startIndex = this.carrierService.isInTransit(carrier) ? 1 : 0;
+
+        for (let i = startIndex; i < carrier.waypoints.length; i++) {
+            let waypoint = carrier.waypoints[i];
+            let destination = this.starService.getById(game, waypoint.destination);
+
+            // If the destination is not within hyperspace range of the player, remove it
+            // and all subsequent waypoints.
+            let inRange = this.isCarrierWithinHyperspaceRangeOfStar(game, carrier, destination);
+
+            if (!inRange) {
+                carrier.waypoints.splice(i);
+
+                if (carrier.waypointsLooped) {
+                    carrier.waypointsLooped = this.canLoop(game, player, carrier);
+                }
+
+                break;
+            }
+        }
+    }
+
+    isCarrierWithinHyperspaceRangeOfStar(game, carrier, star) {
+        let effectiveTechs = this.technologyService.getCarrierEffectiveTechnologyLevels(game, carrier);
+        let hyperspaceDistance = this.distanceService.getHyperspaceDistance(game, effectiveTechs.hyperspace);
+
+        let distance = this.distanceService.getDistanceBetweenLocations(carrier.location, star.location);
+
+        return distance <= hyperspaceDistance;
     }
 
     rerouteToNearestFriendlyStarFromStar(game, carrier) {

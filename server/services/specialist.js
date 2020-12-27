@@ -138,6 +138,9 @@ module.exports = class SpecialistService {
         carrier.specialistId = specialist.id;
         player.credits -= cost;
 
+        // TODO: Sanitize the carrier waypoints by hyperspace range
+        // as the specialist may have altered how far the carrier can travel.
+        
         // Update the DB.
         await this.gameModel.bulkWrite([
             {

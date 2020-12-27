@@ -333,7 +333,7 @@ module.exports = class GameTickService extends EventEmitter {
 
     _sanitiseDarkModeCarrierWaypoints(game) {
         game.galaxy.carriers.forEach(c => 
-            this.waypointService.sanitiseDarkModeCarrierWaypoints(game, c));
+            this.waypointService.sanitiseCarrierWaypointsByScanningRange(game, c));
     }
 
     async _performCombat(game, player, star, carriers, report) {

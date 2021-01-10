@@ -31,6 +31,11 @@ class GameService extends BaseApiService {
       { withCredentials: true })
   }
 
+  listStatistics () {
+    return axios.get(this.BASE_URL + 'game/list/statistics',
+      { withCredentials: true })
+  }
+
   listOfficialGames () {
     return axios.get(this.BASE_URL + 'game/list/official',
       { withCredentials: true })

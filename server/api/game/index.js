@@ -49,6 +49,16 @@ module.exports = (router, io, container) => {
         }
     }, middleware.handleError);
 
+    router.get('/api/game/list/statistics', middleware.authenticate, async (req, res, next) => {
+        try {
+            let stats = await container.gameListService.listStatistics();
+
+            return res.status(200).json(stats);
+        } catch (err) {
+            return next(err);
+        }
+    }, middleware.handleError);
+
     router.get('/api/game/list/official', middleware.authenticate, async (req, res, next) => {
         try {
             let games = await container.gameListService.listOfficialGames();

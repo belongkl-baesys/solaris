@@ -97,6 +97,7 @@ export default {
   },
   data () {
     return {
+      statistics: [],
       serverGames: [],
       userGames: [],
       isLoadingServerGames: true,
@@ -105,6 +106,10 @@ export default {
   },
   async mounted () {
     try {
+      // TODO: Group these calls together and run in parallel to improve performance.
+      let responseStats = await gameService.listStatistics()
+      this.statistics = responseStats.data
+
       let responseOfficial = await gameService.listOfficialGames()
       this.serverGames = responseOfficial.data
 

@@ -6,6 +6,46 @@ module.exports = class GameListService {
         this.gameModel = gameModel;
     }
 
+    async listStatistics() {
+        let result = await this.gameModel.aggregate([
+            { "$facet": {
+                'pending': [
+                    { "$match" : { 'state.startDate': { $eq: null }, 'state.endDate': { $eq: null }}},
+                    { "$count": "pending" }
+                ],
+                'inProgress': [
+                    { "$match" : { 'state.startDate': { $ne: null }, 'state.endDate': { $eq: null }}},
+                    { "$count": "inProgress" }
+                ],
+                'finished': [
+                    { "$match" : { 'state.startDate': { $ne: null }, 'state.endDate': { $ne: null }}},
+                    { "$count": "finished" }
+                ]
+            }},
+            { "$project": {
+                "pending": { "$arrayElemAt": ["$pending.pending", 0] },
+                "inProgress": { "$arrayElemAt": ["$inProgress.inProgress", 0] },
+                "finished": { "$arrayElemAt": ["$finished.finished", 0] }
+            }}
+        ]);
+
+        if (result == null || !result.length || result[0] == null) {
+            result = {
+                pending: 0,
+                inProgress: 0,
+                finished: 0
+            }
+        } else {
+            result = {
+                pending: result[0].inProgress,
+                inProgress: result[0].inProgress,
+                finished: result[0].finished
+            }
+        }
+
+        return result;
+    }
+
     async listOfficialGames() {
         return await this.gameModel.find({
             'settings.general.createdByUserId': { $eq: null },

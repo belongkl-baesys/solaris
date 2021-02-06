@@ -418,6 +418,10 @@
         ],
         "speed": [
             {
+                "value": 0.5,
+                "text": "Warpspeed (1 tick = 30 Seconds)"
+            },
+            {
                 "value": 1,
                 "text": "Hyper (1 tick = 1 minute)"
             },

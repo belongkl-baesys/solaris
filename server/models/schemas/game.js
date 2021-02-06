@@ -23,7 +23,7 @@ const schema = new Schema({
         },
         galaxy: {
 			galaxyType: { type: Types.String, required: true, enum: ['circular', 'spiral', 'doughnut','circular-balanced', 'irregular'], default: 'circular' },
-			starsPerPlayer: { type: Types.Number, required: true, enum: [5, 10, 20, 30, 50], default: 20 },
+			starsPerPlayer: { type: Types.Number, required: true, enum: [5, 10, 20, 30, 50, 100], default: 20 },
 			productionTicks: { type: Types.Number, required: true, enum: [16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36], default: 24 }
         },
         specialGalaxy: {
@@ -78,8 +78,8 @@ const schema = new Schema({
 		},
 		gameTime: {
 			gameType: { type: Types.String, required: true, enum: ['realTime', 'turnBased'], default: 'realTime' },
-			speed: { type: Types.Number, required: true, enum: [10, 30, 60], default: 30 },
-			startDelay: { type: Types.Number, required: true, enum: [10, 30, 60, 120, 240], default: 30 },
+			speed: { type: Types.Number, required: true, enum: [1, 10, 30, 60], default: 30 },
+			startDelay: { type: Types.Number, required: true, enum: [0, 10, 30, 60, 120, 240], default: 30 },
 			turnJumps: { type: Types.Number, required: true, enum: [1, 6, 8, 12, 24], default: 8 },
 			maxTurnWait: { type: Types.Number, required: true, enum: [1, 6, 8, 10, 12, 18, 24, 48], default: 24 }
 		}

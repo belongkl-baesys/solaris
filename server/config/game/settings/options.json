@@ -244,6 +244,10 @@
             {
             "value": 50,
             "text": "50 Stars (Huge)"
+            },
+            {
+                "value": 100,
+                "text": "100 Stars (Massive)"
             }
         ],
         "productionTicks": [
@@ -414,6 +418,10 @@
         ],
         "speed": [
             {
+                "value": 1,
+                "text": "Hyper (1 tick = 1 minute)"
+            },
+            {
                 "value": 10,
                 "text": "Fast (1 tick = 10 minutes)"
             },
@@ -427,6 +435,10 @@
             }
         ],
         "startDelay": [
+            {
+                "value": 0,
+                "text": "Instant"
+            },
             {
                 "value": 10,
                 "text": "10 Minutes"
